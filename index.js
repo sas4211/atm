@@ -13,26 +13,78 @@ if (PinAnswer.pin === MyPinCode) {
 else {
     console.log("Incorrect Pin Number");
 }
-let OperationAnswer = await inquirer.prompt([{
-        name: "operation",
-        message: "Please Select Option",
-        type: "list",
-        choices: ["WithDraw", "Check Balance"]
-    }]);
-// console.log(OperationAnswer);
-if (OperationAnswer.operation === "WithDraw") {
-    let amountAns = await inquirer.prompt([
+;
+if (PinAnswer.pin === MyPinCode) {
+    let atmQuestion = await inquirer.prompt([
         {
-            name: "amount",
-            message: "Enter Your Amount = ",
-            type: "number"
+            name: "AccountType",
+            type: 'list',
+            message: "Select Your Account Type",
+            choices: [
+                "Current Account",
+                "Saving Account"
+            ]
+        },
+        {
+            name: "transactionMethod",
+            type: "list",
+            message: "Select Your Tansaction Method",
+            choices: [
+                "Cash-Withdrawal",
+                "Fast-Cash",
+                "Check-Balance"
+            ]
         }
     ]);
-    /// assignment operators =, -= ,+=
-    MyBalance -= amountAns.amount;
-    ///console.log(amountAns.amount)
-    console.log("Your Remaining Balance Is = " + MyBalance);
+    ////let OperationAnswer = await inquirer.prompt([{
+    ///  name :"operation",
+    ///   message:"Please Select Option",
+    /// type: "list",
+    ///// choices: ["Cash-WithDraw", "Fast-Cash","Check-Balance"]}]);
+    // console.log(OperationAnswer);
+    if (atmQuestion.transactionMethod == "Cash-WithDraw") {
+        let amountAns = await inquirer.prompt([
+            {
+                name: "withdrawalamount",
+                message: "Enter Your Amount = ",
+                type: "number"
+            }
+        ]);
+        if (MyBalance >= amountAns.withdrawalamount) {
+            /// assignment operators =, -= ,+=
+            MyBalance -= amountAns.amount;
+            ///console.log(amountAns.amount)
+            console.log("Your Remaining Balance Is = " + MyBalance);
+        }
+        else {
+            console.log("Insuffiecent Amount");
+        }
+    }
+    else if (atmQuestion.transactionMethod == "Check-Balance") {
+        console.log("Your Balance IS = " + MyBalance);
+    }
+    else {
+        let fastCashAmount = await inquirer.prompt([
+            {
+                name: 'fastcash',
+                message: 'Select the amount you want to withdraw',
+                type: 'list',
+                choices: [
+                    "1000",
+                    "3000",
+                    "5000"
+                ]
+            }
+        ]);
+        if (MyBalance >= fastCashAmount.fastcash) {
+            MyBalance -= fastCashAmount.fastcash;
+            console.log("Your Remaining Balance Is = " + MyBalance);
+        }
+        else {
+            console.log("Insuffiecent Amount");
+        }
+    }
 }
-else if (OperationAnswer.operation === "Check Balance") {
-    console.log("Your Balance IS = " + MyBalance);
+else {
+    console.log("Incorrect pin");
 }
