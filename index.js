@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 import inquirer from "inquirer";
 let MyBalance = 10000; //dollars
 let MyPinCode = 1234;
@@ -36,13 +37,7 @@ if (PinAnswer.pin === MyPinCode) {
             ]
         }
     ]);
-    ////let OperationAnswer = await inquirer.prompt([{
-    ///  name :"operation",
-    ///   message:"Please Select Option",
-    /// type: "list",
-    ///// choices: ["Cash-WithDraw", "Fast-Cash","Check-Balance"]}]);
-    // console.log(OperationAnswer);
-    if (atmQuestion.transactionMethod == "Cash-WithDraw") {
+    if (atmQuestion.transactionMethod == "Cash-Withdrawal") {
         let amountAns = await inquirer.prompt([
             {
                 name: "withdrawalamount",
